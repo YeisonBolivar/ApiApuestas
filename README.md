@@ -329,7 +329,6 @@ http://127.0.0.1:5000
 | GET    | /api/tournaments/id/matches | Obtiene partidos de un torneo       |
 | GET    | /api/tournaments/id/ranking | Obtiene ranking del torneo          |
 | POST   | /api/predict                   | Registra un pronóstico              |
-| GET    | /api/user/me                   | Información del usuario autenticado |
 
 ### Ejemplo de solicitud
 
