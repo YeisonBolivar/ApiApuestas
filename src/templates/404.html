@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Página no encontrada{% endblock %}
+{% block body %}
+<div class="container text-center mt-5">
+    <div class="card shadow p-5">
+        <i class="fas fa-question-circle fa-5x text-warning mb-3"></i>
+        <h1>404</h1>
+        <p class="lead">Lo sentimos, la página que buscas no existe.</p>
+        <a href="{{ url_for('auth.index') }}" class="btn btn-primary mt-3">
+            <i class="fas fa-home"></i> Volver al inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

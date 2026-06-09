@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Partidos - {{ tournament.name }}{% endblock %}
+{% block body %}
+{% include 'partials/navbar.html' %}
+<div class="container mt-4">
+    <h2><i class="fas fa-futbol"></i> Partidos de {{ tournament.name }}</h2>
+    {% if partidos %}
+        {% for partido in partidos %}
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="card-title">{{ partido.equipo_local }} vs {{ partido.equipo_visitante }}</h5>
+                        <p><i class="far fa-calendar-alt"></i> {{ partido.fecha.strftime('%Y-%m-%d %H:%M') }}</p>
+                        <p><i class="fas fa-coins"></i> Pozo actual: ${{ partido.prize_pool }} (costo pronóstico: 1000)</p>
+                    </div>
+                    <div class="col-md-6">
+                        {% if partido.estado == 'abierto' %}
+                            {% if partido.id in pronosticados %}
+                                <div class="alert alert-success">Ya has pronosticado este partido.</div>
+                            {% else %}
+                                <form action="{{ url_for('matches.predict', partido_id=partido.id) }}" method="post" class="row g-2 align-items-end">
+                                    <div class="col-auto">
+                                        <input type="number" name="goles_local" class="form-control" placeholder="Goles local" required min="0">
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="number" name="goles_visitante" class="form-control" placeholder="Goles visitante" required min="0">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-chart-line"></i> Pronosticar</button>
+                                    </div>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            {% set mi_pronostico = pronosticos_usuario.get(partido.id) %}
+                            {% if mi_pronostico %}
+                                <div class="bg-light p-2 rounded">
+                                    <strong>Tu pronóstico:</strong> {{ mi_pronostico.goles_local }} - {{ mi_pronostico.goles_visitante }}<br>
+                                    <strong>Resultado final:</strong> {{ partido.resultado_local }} - {{ partido.resultado_visitante }}<br>
+                                    {% if mi_pronostico.is_exacto %}
+                                        <span class="text-success"><i class="fas fa-star"></i> ¡Acierto exacto! +{{ mi_pronostico.points_awarded }} pts, +${{ mi_pronostico.prize_awarded }}</span>
+                                    {% elif mi_pronostico.points_awarded > 0 %}
+                                        <span class="text-info"><i class="fas fa-thumbs-up"></i> Acertaste resultado. +{{ mi_pronostico.points_awarded }} pts</span>
+                                    {% else %}
+                                        <span class="text-danger"><i class="fas fa-times-circle"></i> No acertaste.</span>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-secondary">No realizaste pronóstico para este partido.</div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">No hay partidos en este torneo.</div>
+    {% endif %}
+    <a href="{{ url_for('tournaments.view_tournament', id=tournament.id) }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Volver al torneo
+    </a>
+</div>
+{% endblock %}
