@@ -326,8 +326,8 @@ http://127.0.0.1:5000
 | Método | Endpoint                       | Descripción                         |
 | ------ | ------------------------------ | ----------------------------------- |
 | GET    | /api/tournaments               | Lista todos los torneos             |
-| GET    | /api/tournaments/<tid>/matches | Obtiene partidos de un torneo       |
-| GET    | /api/tournaments/<tid>/ranking | Obtiene ranking del torneo          |
+| GET    | /api/tournaments/"<tid>"/matches | Obtiene partidos de un torneo       |
+| GET    | /api/tournaments/"<tid>"/ranking | Obtiene ranking del torneo          |
 | POST   | /api/predict                   | Registra un pronóstico              |
 | GET    | /api/user/me                   | Información del usuario autenticado |
 
