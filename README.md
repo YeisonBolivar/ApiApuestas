@@ -239,11 +239,6 @@ La lógica se encuentra separada mediante Blueprints y modelos independientes, f
 * Repartición de premios.
 * Finalización de torneos.
 
-### Delete
-
-* Eliminación de partidos sin actividad asociada.
-* Eliminación de registros administrativos (opcional).
-
 ---
 
 #  Instalación y Ejecución
